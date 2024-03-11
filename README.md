@@ -4,7 +4,7 @@
 [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/hello_world/)
 
 ```sh
-gleam add hello_world
+gleam add guess_game
 ```
 ```gleam
 import guess_game
