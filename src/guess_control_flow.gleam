@@ -1,7 +1,7 @@
 import gleam/erlang.{get_line}
 import gleam/order.{Eq, Gt, Lt}
 import gleam/string.{trim}
-import gleam/io.{println}
+import gleam/io.{println, println_error}
 import gleam/int.{compare, parse}
 
 pub fn exec(secret_number: Int, guess_times: Int) {
@@ -9,7 +9,12 @@ pub fn exec(secret_number: Int, guess_times: Int) {
 
   let guess_number = case parse(trim(input)) {
     Ok(n) -> n
-    Error(_) -> panic as "An error occurs while parsing!"
+    Error(_) -> {
+      println_error(
+        "You've to insert a valid positive number between 0 and 100",
+      )
+      exec(secret_number, guess_times)
+    }
   }
 
   let increased_guess_times = guess_times + 1
