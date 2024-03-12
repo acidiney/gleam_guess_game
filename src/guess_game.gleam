@@ -2,6 +2,7 @@ import gleam/io
 import gleam/string
 import gleam/int
 import gleam/erlang
+import gleam/order.{Eq, Gt, Lt}
 
 fn guess_control_flow(secret_number: Int, guess_times: Int) {
   let input = case erlang.get_line("Insert the number: ") {
@@ -16,22 +17,19 @@ fn guess_control_flow(secret_number: Int, guess_times: Int) {
 
   let increased_guess_times = guess_times + 1
 
-  case guess_number > secret_number {
-    True -> {
+  case int.compare(guess_number, secret_number) {
+    Gt -> {
       io.println("Guess lower!")
       guess_control_flow(secret_number, increased_guess_times)
     }
-    False ->
-      case guess_number < secret_number {
-        True -> {
-          io.println("Guess higher!")
-          guess_control_flow(secret_number, increased_guess_times)
-        }
-        False -> {
-          io.println("You won!")
-          guess_times
-        }
-      }
+    Lt -> {
+      io.println("Guess higher!")
+      guess_control_flow(secret_number, increased_guess_times)
+    }
+    Eq -> {
+      io.println("You won!")
+      guess_times
+    }
   }
 }
 
